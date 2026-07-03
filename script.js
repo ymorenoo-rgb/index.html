@@ -1,229 +1,119 @@
-:root {
-    --primary-color: #0b1a30;
-    --secondary-color: #1e3c72;
-    --accent-color: #f39c12;
-    --bg-card: #ffffff;
-    --text-dark: #2c3e50;
-    --text-muted: #7f8c8d;
+// Variable global para controlar el idioma activo
+let currentLang = 'es';
+
+// Diccionario de textos fijos de la interfaz para soporte bilingüe
+const interfaceTranslations = {
+    es: {
+        title: "¡Bienvenido a la Capital!",
+        subtitle: "Toca tu perfil de viajero para activar las recomendaciones inteligentes de IA",
+        lblNegocios: "Negocios y Conexiones",
+        subNegocios: "Hoteles ejecutivos, zonas VIP y restaurantes top",
+        lblFamilia: "Vacaciones en Familia",
+        subFamilia: "Diversión, cultura y parques para todas las edades",
+        lblAventura: "Cultura y Alrededores",
+        subAventura: "Pueblos coloniales, naturaleza y café de origen",
+        resultsTitle: "✨ Sugerencias de la IA para tu estadía:",
+        btnReset: "🔄 Nueva Consulta"
+    },
+    en: {
+        title: "Welcome to the Capital!",
+        subtitle: "Touch your traveler profile to activate AI smart recommendations",
+        lblNegocios: "Business & Connections",
+        subNegocios: "Executive hotels, VIP lounges, and top restaurants",
+        lblFamilia: "Family Vacations",
+        subFamilia: "Fun, culture, and parks for all generations",
+        lblAventura: "Culture & Surroundings",
+        subAventura: "Colonial towns, nature, and specialty coffee",
+        resultsTitle: "✨ AI Recommendations for your stay:",
+        btnReset: "🔄 New Query"
+    }
+};
+
+// Base de datos de recomendaciones analíticas bilingües (Bogotá y Sabana)
+const bogotaDatabase = {
+    es: {
+        negociomix: `
+            <div class="recommendation-item"><strong>🏢 Alojamiento:</strong> Hoteles corporativos de primer nivel en la Av. Calle 26 o el Centro Internacional.</div>
+            <div class="recommendation-item"><strong>🍽️ Gastronomía:</strong> Almuerzos de negocios exclusivos en la Zona G o el Parque de la 93.</div>
+            <div class="recommendation-item"><strong>🚶‍♂️ Actividad express:</strong> Conexión rápida en las salas VIP de El Dorado o visita guiada al Museo del Oro.</div>
+        `,
+        familiamix: `
+            <div class="recommendation-item"><strong>🏨 Alojamiento:</strong> Hoteles con suites confortables en los sectores de Usaquén o Corferias.</div>
+            <div class="recommendation-item"><strong>🍲 Gastronomía:</strong> Desayuno tradicional con chocolate completo en el centro histórico y postres en la sabana.</div>
+            <div class="recommendation-item"><strong>🎡 Actividad:</strong> Ascenso al Cerro de Monserrate (Teleférico) y tarde interactiva de ciencia en Maloka.</div>
+        `,
+        aventuramix: `
+            <div class="recommendation-item"><strong>🎒 Alojamiento:</strong> Hoteles boutique con encanto histórico y hostales artísticos en La Candelaria.</div>
+            <div class="recommendation-item"><strong>☕ Gastronomía:</strong> Catas de café de origen local y ajiaco santafereño en plazas tradicionales.</div>
+            <div class="recommendation-item"><strong>⛰️ Alrededores:</strong> Aventura de un día en la Catedral de Sal de Zipaquirá o senderismo en la Laguna de Guatavita.</div>
+        `
+    },
+    en: {
+        negociomix: `
+            <div class="recommendation-item"><strong>🏢 Lodging:</strong> Premium corporate hotels located on 26th Avenue or the International Center.</div>
+            <div class="recommendation-item"><strong>🍽️ Dining:</strong> High-end business lunches and fine dining in Zona G or 93rd Street Park.</div>
+            <div class="recommendation-item"><strong>🚶‍♂️ Express Activity:</strong> Relax in El Dorado's premium VIP lounges or take a quick tour of the Gold Museum.</div>
+        `,
+        familiamix: `
+            <div class="recommendation-item"><strong>🏨 Lodging:</strong> Family-friendly hotels with spacious suites in Usaquén or near Corferias.</div>
+            <div class="recommendation-item"><strong>🍲 Dining:</strong> Traditional hot chocolate breakfast in the historic downtown and countryside meals.</div>
+            <div class="recommendation-item"><strong>🎡 Activity:</strong> Cable car ride up to Monserrate Sanctuary and interactive science day at Maloka Museum.</div>
+        `,
+        aventuramix: `
+            <div class="recommendation-item"><strong>🎒 Lodging:</strong> Charming boutique hotels and artistic cultural hostels in La Candelaria neighborhood.</div>
+            <div class="recommendation-item"><strong>☕ Dining:</strong> Local specialty coffee tastings and authentic Ajiaco stew in traditional markets.</div>
+            <div class="recommendation-item"><strong>⛰️ Surroundings:</strong> Day trip to the Zipaquirá Salt Cathedral or ecological hiking at Guatavita Sacred Lagoon.</div>
+        `
+    }
+};
+
+// Función para alternar el idioma de la aplicación
+function changeLanguage(lang) {
+    currentLang = lang;
+    
+    // Cambiar estado activo de los botones de idioma
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    
+    // Traducir textos fijos del DOM
+    document.getElementById('main-title').innerText = interfaceTranslations[lang].title;
+    document.getElementById('main-subtitle').innerText = interfaceTranslations[lang].subtitle;
+    document.getElementById('lbl-negocios').innerText = interfaceTranslations[lang].lblNegocios;
+    document.getElementById('sub-negocios').innerText = interfaceTranslations[lang].subNegocios;
+    document.getElementById('lbl-familia').innerText = interfaceTranslations[lang].lblFamilia;
+    document.getElementById('sub-familia').innerText = interfaceTranslations[lang].subFamilia;
+    document.getElementById('lbl-aventura').innerText = interfaceTranslations[lang].lblAventura;
+    document.getElementById('sub-aventura').innerText = interfaceTranslations[lang].subAventura;
+    document.getElementById('results-title').innerText = interfaceTranslations[lang].resultsTitle;
+    document.getElementById('btn-reset').innerText = interfaceTranslations[lang].btnReset;
+    
+    // Si la pantalla de resultados está visible, actualizar el idioma de las recomendaciones actuales
+    if (!document.getElementById('results').classList.contains('hidden')) {
+        const activeCategory = document.querySelector('.options-grid').getAttribute('data-last-selected');
+        if (activeCategory) {
+            getRecommendation(activeCategory);
+        }
+    }
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: radial-gradient(circle, #1e272e 0%, #0f141c 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+// Función para procesar la selección y simular el motor analítico
+function getRecommendation(perfil) {
+    // Guardar última selección para permitir traducción dinámica en tiempo real
+    document.querySelector('.options-grid').setAttribute('data-last-selected', perfil);
+    
+    document.querySelector('.options-grid').classList.add('hidden');
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.classList.remove('hidden');
+    
+    // Mapeo interno de categorías
+    const dbKey = perfil === 'negocios' ? 'negociomix' : (perfil === 'familia' ? 'familiamix' : 'aventuramix');
+    
+    // Cargar los datos correspondientes al idioma seleccionado
+    document.getElementById('recommendation-text').innerHTML = bogotaDatabase[currentLang][dbKey];
 }
 
-/* Contenedor vertical estilo Tótem/POP moderno */
-.pop-container {
-    width: 100%;
-    max-width: 440px;
-    height: 840px;
-    background-color: #f8f9fa;
-    border-radius: 24px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border: 6px solid #2c3e50;
-    position: relative;
-}
-
-/* Barra superior de cambio de idioma */
-.lang-bar {
-    background-color: #081222;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding: 10px 20px;
-}
-
-.btn-lang {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: rgba(255,255,255,0.7);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-lang.active {
-    background-color: var(--accent-color);
-    color: #000;
-    font-weight: bold;
-    border-color: var(--accent-color);
-}
-
-/* Encabezado Premium */
-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    padding: 35px 24px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-}
-
-.logo-airport {
-    font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 3px;
-    margin-bottom: 12px;
-    color: var(--accent-color);
-}
-
-header h1 {
-    margin: 0 0 10px 0;
-    font-size: 1.9rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-}
-
-header p {
-    font-size: 0.9rem;
-    opacity: 0.85;
-    margin: 0;
-    line-height: 1.4;
-}
-
-/* Cuerpo principal */
-main {
-    flex: 1;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #f1f3f6;
-}
-
-.options-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-/* Botones interactivos tipo Tarjeta */
-.btn-option {
-    background: var(--bg-card);
-    border: none;
-    border-radius: 18px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-    text-align: left;
-    width: 100%;
-}
-
-.btn-option:active {
-    transform: scale(0.97);
-    background-color: #fdfefe;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.icon-wrapper {
-    font-size: 2.2rem;
-    background: #edf2f7;
-    padding: 12px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 45px;
-}
-
-.text-wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-.btn-option .label {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 3px;
-}
-
-.btn-option .sublabel {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.3;
-}
-
-/* Bloque de resultados dinámicos */
-#results {
-    background: var(--bg-card);
-    padding: 24px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border-top: 4px solid var(--accent-color);
-    animation: fadeIn 0.4s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-#results h3 {
-    margin-top: 0;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    margin-bottom: 18px;
-}
-
-.recommendation-item {
-    margin-bottom: 14px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--text-dark);
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f1f3f6;
-}
-
-.recommendation-item:last-child {
-    border-bottom: none;
-}
-
-.recommendation-item strong {
-    color: var(--secondary-color);
-}
-
-.btn-reset {
-    width: 100%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: 14px;
-    font-size: 1rem;
-    font-weight: 700;
-    margin-top: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(30, 60, 114, 0.3);
-}
-
-.btn-reset:active {
-    opacity: 0.9;
-}
-
-footer {
-    background-color: #ffffff;
-    text-align: center;
-    padding: 14px;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    border-top: 1px solid #eef2f5;
-}
-
-.hidden {
-    display: none !important;
+function resetApp() {
+    document.getElementById('results').classList.add('hidden');
+    document.querySelector('.options-grid').classList.remove('hidden');
+    document.querySelector('.options-grid').removeAttribute('data-last-selected');
 }
