@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart POP - El Dorado Bogotá</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="pop-container">
+        <header>
+            <div class="logo-airport">✈️ El Dorado | Bogotá</div>
+            <h1>¡Bienvenido a la Capital!</h1>
+            <p>Toca tu perfil de viajero para activar las recomendaciones inteligentes de IA</p>
+        </header>
+        
+        <main id="app-content">
+            <!-- Grilla de Opciones Táctiles -->
+            <div class="options-grid">
+                <button class="btn-option" onclick="getRecommendation('negocios')">
+                    <span class="icon">💼</span>
+                    <span class="label">Negocios y Conexiones</span>
+                </button>
+                <button class="btn-option" onclick="getRecommendation('familia')">
+                    <span class="icon">👨‍👩‍👧‍👦</span>
+                    <span class="label">Vacaciones en Familia</span>
+                </button>
+                <button class="btn-option" onclick="getRecommendation('aventura')">
+                    <span class="icon">🥾</span>
+                    <span class="label">Cultura y Alrededores</span>
+                </button>
+            </div>
+            
+            <!-- Contenedor de Resultados del Motor Analítico -->
+            <div id="results" class="hidden">
+                <h3>✨ Sugerencias de la IA para tu estadía:</h3>
+                <div id="recommendation-text"></div>
+                <button class="btn-reset" onclick="resetApp()">🔄 Nueva Consulta</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Punto de Información Digital Inteligente • Innovatec Soluciones</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+:root {
+    --primary-color: #0f2a4a;
+    --accent-color: #e67e22;
+    --bg-light: #f4f7f6;
+    --text-dark: #333;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Simulación de la pantalla vertical del POP */
+.pop-container {
+    width: 100%;
+    max-width: 450px;
+    height: 850px;
+    background-color: var(--bg-light);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 8px solid #333;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.logo-airport {
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: var(--accent-color);
+}
+
+header h1 {
+    margin: 5px 0;
+    font-size: 1.8rem;
+}
+
+header p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 0;
+}
+
+main {
+    flex: 1;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btn-option {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.btn-option:active {
+    transform: scale(0.98);
+    background-color: #eef2f7;
+    border-color: var(--accent-color);
+}
+
+.btn-option .icon {
+    font-size: 2.5rem;
+}
+
+.btn-option .label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Contenedor de Resultados */
+#results {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 5px solid var(--accent-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+#results h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.recommendation-item {
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+}
+
+.recommendation-item strong {
+    color: var(--primary-color);
+}
+
+.btn-reset {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.btn-reset:active {
+    background-color: #1a4475;
+}
+
+footer {
+    background-color: #eaeded;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.75rem;
+    color: #7f8c8d;
+    border-top: 1px solid #d5dbdb;
+}
+
+.hidden {
+    display: none !important;
+}
+// Base de datos local optimizada para la simulación turística de la IA
+const bogotaDatabase = {
+    negocios: `
+        <div class="recommendation-item"><strong>🏢 Alojamiento:</strong> Hoteles corporativos de primer nivel en la Calle 26 (cerca del aeropuerto) o en el Centro Internacional.</div>
+        <div class="recommendation-item"><strong>🍽️ Gastronomía:</strong> Almuerzos ejecutivos y cenas de negocios en la Zona G o el Parque de la 93.</div>
+        <div class="recommendation-item"><strong>🚶‍♂️ Actividad express:</strong> Visita al Museo del Oro en el centro de la ciudad o tiempo de coworking premium en los salones VIP de El Dorado.</div>
+    `,
+    familia: `
+        <div class="recommendation-item"><strong>🏨 Alojamiento:</strong> Hoteles familiares con suites confortables en el sector de Corferias o Usaquén.</div>
+        <div class="recommendation-item"><strong>🍲 Gastronomía:</strong> Desayunos típicos con chocolate completo en el centro histórico y almuerzos en restaurantes campestres del norte.</div>
+        <div class="recommendation-item"><strong>🎡 Actividad:</strong> Recorrido en el Teleférico hacia el Cerro de Monserrate, tarde recreativa en el Parque Metropolitano Simón Bolívar o visita interactiva a Maloka.</div>
+    `,
+    aventura: `
+        <div class="recommendation-item"><strong>🎒 Alojamiento:</strong> Hostales culturales y hoteles boutique con encanto en el barrio La Candelaria.</div>
+        <div class="recommendation-item"><strong>☕ Gastronomía:</strong> Café de origen en plazoletas locales, ajiaco santafereño tradicional y mercados de frutas locales.</div>
+        <div class="recommendation-item"><strong>⛰️ Alrededores:</strong> Excursión de un día a la Catedral de Sal de Zipaquirá o senderismo ecológico hacia la Laguna de Guatavita.</div>
+    `
+};
+
+function getRecommendation(perfil) {
+    // Ocultar la cuadrícula de botones con una transición ágil
+    document.querySelector('.options-grid').classList.add('hidden');
+    
+    // Capturar y activar la sección de resultados
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.classList.remove('hidden');
+    
+    // Inyectar las recomendaciones basadas en la selección procesada
+    document.getElementById('recommendation-text').innerHTML = bogotaDatabase[perfil];
+}
+
+function resetApp() {
+    // Devolver la interfaz al estado inicial para nuevos turistas
+    document.getElementById('results').classList.add('hidden');
+    document.querySelector('.options-grid').classList.remove('hidden');
+}
