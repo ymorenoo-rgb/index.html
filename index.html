@@ -4,39 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart POP - El Dorado Bogotá</title>
-    <!-- Aquí le decimos al navegador que cargue el archivo de diseño -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="pop-container">
+        <!-- Barra superior de idioma -->
+        <div class="lang-bar">
+            <button class="btn-lang active" id="btn-es" onclick="changeLanguage('es')">🇨🇴 Español</button>
+            <button class="btn-lang" id="btn-en" onclick="changeLanguage('en')">🇺🇸 English</button>
+        </div>
+
         <header>
-            <div class="logo-airport">✈️ El Dorado | Bogotá</div>
-            <h1>¡Bienvenido a la Capital!</h1>
-            <p>Toca tu perfil de viajero para activar las recomendaciones inteligentes de IA</p>
+            <div class="logo-airport">✈️ EL DORADO • BOGOTÁ</div>
+            <h1 id="main-title">¡Bienvenido a la Capital!</h1>
+            <p id="main-subtitle">Toca tu perfil de viajero para activar las recomendaciones inteligentes de IA</p>
         </header>
         
         <main id="app-content">
             <!-- Grilla de Opciones Táctiles -->
             <div class="options-grid">
                 <button class="btn-option" onclick="getRecommendation('negocios')">
-                    <span class="icon">💼</span>
-                    <span class="label">Negocios y Conexiones</span>
+                    <div class="icon-wrapper">💼</div>
+                    <div class="text-wrapper">
+                        <span class="label" id="lbl-negocios">Negocios y Conexiones</span>
+                        <span class="sublabel" id="sub-negocios">Hoteles ejecutivos, zonas VIP y restaurantes top</span>
+                    </div>
                 </button>
+
                 <button class="btn-option" onclick="getRecommendation('familia')">
-                    <span class="icon">👨‍👩‍👧‍👦</span>
-                    <span class="label">Vacaciones en Familia</span>
+                    <div class="icon-wrapper">👨‍👩‍👧‍👦</div>
+                    <div class="text-wrapper">
+                        <span class="label" id="lbl-familia">Vacaciones en Familia</span>
+                        <span class="sublabel" id="sub-familia">Diversión, cultura y parques para todas las edades</span>
+                    </div>
                 </button>
+
                 <button class="btn-option" onclick="getRecommendation('aventura')">
-                    <span class="icon">🥾</span>
-                    <span class="label">Cultura y Alrededores</span>
+                    <div class="icon-wrapper">🥾</div>
+                    <div class="text-wrapper">
+                        <span class="label" id="lbl-aventura">Cultura y Alrededores</span>
+                        <span class="sublabel" id="sub-aventura">Pueblos coloniales, naturaleza y café de origen</span>
+                    </div>
                 </button>
             </div>
             
-            <!-- Contenedor de Resultados del Motor Analítico -->
+            <!-- Contenedor de Resultados -->
             <div id="results" class="hidden">
-                <h3>✨ Sugerencias de la IA para tu estadía:</h3>
+                <h3 id="results-title">✨ Sugerencias de la IA para tu estadía:</h3>
                 <div id="recommendation-text"></div>
-                <button class="btn-reset" onclick="resetApp()">🔄 Nueva Consulta</button>
+                <button class="btn-reset" id="btn-reset" onclick="resetApp()">🔄 Nueva Consulta / New Query</button>
             </div>
         </main>
         
@@ -44,7 +60,6 @@
             <p>Punto de Información Digital Inteligente • Innovatec Soluciones</p>
         </footer>
     </div>
-    <!-- Aquí le decimos al navegador que cargue la lógica de programación -->
     <script src="script.js"></script>
 </body>
 </html>
