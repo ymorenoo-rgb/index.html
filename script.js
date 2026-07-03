@@ -1,36 +1,229 @@
-// Base de datos local optimizada para la simulación turística de la IA
-const bogotaDatabase = {
-    negocios: `
-        <div class="recommendation-item"><strong>🏢 Alojamiento:</strong> Hoteles corporativos de primer nivel en la Calle 26 (cerca del aeropuerto) o en el Centro Internacional.</div>
-        <div class="recommendation-item"><strong>🍽️ Gastronomía:</strong> Almuerzos ejecutivos y cenas de negocios en la Zona G o el Parque de la 93.</div>
-        <div class="recommendation-item"><strong>🚶‍♂️ Actividad express:</strong> Visita al Museo del Oro en el centro de la ciudad o tiempo de coworking premium en los salones VIP de El Dorado.</div>
-    `,
-    familia: `
-        <div class="recommendation-item"><strong>🏨 Alojamiento:</strong> Hoteles familiares con suites confortables en el sector de Corferias o Usaquén.</div>
-        <div class="recommendation-item"><strong>🍲 Gastronomía:</strong> Desayunos típicos con chocolate completo en el centro histórico y almuerzos en restaurantes campestres del norte.</div>
-        <div class="recommendation-item"><strong>🎡 Actividad:</strong> Recorrido en el Teleférico hacia el Cerro de Monserrate, tarde recreativa en el Parque Metropolitano Simón Bolívar o visita interactiva a Maloka.</div>
-    `,
-    aventura: `
-        <div class="recommendation-item"><strong>🎒 Alojamiento:</strong> Hostales culturales y hoteles boutique con encanto en el barrio La Candelaria.</div>
-        <div class="recommendation-item"><strong>☕ Gastronomía:</strong> Café de origen en plazoletas locales, ajiaco santafereño tradicional y mercados de frutas locales.</div>
-        <div class="recommendation-item"><strong>⛰️ Alrededores:</strong> Excursión de un día a la Catedral de Sal de Zipaquirá o senderismo ecológico hacia la Laguna de Guatavita.</div>
-    `
-};
-
-function getRecommendation(perfil) {
-    // Ocultar la cuadrícula de botones con una transición ágil
-    document.querySelector('.options-grid').classList.add('hidden');
-    
-    // Capturar y activar la sección de resultados
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.classList.remove('hidden');
-    
-    // Inyectar las recomendaciones basadas en la selección procesada
-    document.getElementById('recommendation-text').innerHTML = bogotaDatabase[perfil];
+:root {
+    --primary-color: #0b1a30;
+    --secondary-color: #1e3c72;
+    --accent-color: #f39c12;
+    --bg-card: #ffffff;
+    --text-dark: #2c3e50;
+    --text-muted: #7f8c8d;
 }
 
-function resetApp() {
-    // Devolver la interfaz al estado inicial para nuevos turistas
-    document.getElementById('results').classList.add('hidden');
-    document.querySelector('.options-grid').classList.remove('hidden');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(circle, #1e272e 0%, #0f141c 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor vertical estilo Tótem/POP moderno */
+.pop-container {
+    width: 100%;
+    max-width: 440px;
+    height: 840px;
+    background-color: #f8f9fa;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 6px solid #2c3e50;
+    position: relative;
+}
+
+/* Barra superior de cambio de idioma */
+.lang-bar {
+    background-color: #081222;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px 20px;
+}
+
+.btn-lang {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.7);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-lang.active {
+    background-color: var(--accent-color);
+    color: #000;
+    font-weight: bold;
+    border-color: var(--accent-color);
+}
+
+/* Encabezado Premium */
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 35px 24px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.logo-airport {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    color: var(--accent-color);
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+header p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Cuerpo principal */
+main {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f1f3f6;
+}
+
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Botones interactivos tipo Tarjeta */
+.btn-option {
+    background: var(--bg-card);
+    border: none;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-align: left;
+    width: 100%;
+}
+
+.btn-option:active {
+    transform: scale(0.97);
+    background-color: #fdfefe;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.icon-wrapper {
+    font-size: 2.2rem;
+    background: #edf2f7;
+    padding: 12px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 45px;
+}
+
+.text-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-option .label {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 3px;
+}
+
+.btn-option .sublabel {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+/* Bloque de resultados dinámicos */
+#results {
+    background: var(--bg-card);
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--accent-color);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#results h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+}
+
+.recommendation-item {
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f3f6;
+}
+
+.recommendation-item:last-child {
+    border-bottom: none;
+}
+
+.recommendation-item strong {
+    color: var(--secondary-color);
+}
+
+.btn-reset {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(30, 60, 114, 0.3);
+}
+
+.btn-reset:active {
+    opacity: 0.9;
+}
+
+footer {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 14px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid #eef2f5;
+}
+
+.hidden {
+    display: none !important;
 }
