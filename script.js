@@ -1,4 +1,6 @@
-// Base de datos local básica con estructura simple (fácil de entender y explicar)
+// ==========================================
+// 1. BASE DE DATOS LOCAL (Sencilla y clara)
+// ==========================================
 const baseDatosTurismo = {
     negocios: [
         {
@@ -34,7 +36,6 @@ const baseDatosTurismo = {
             descripcion: "Sube en teleférico o funicular para disfrutar de la mejor vista panorámica y templos de la ciudad."
         }
     ],
-    // NUEVO: Sección de transportes autorizados solicitada por el usuario de prueba
     transporte: [
         {
             titulo: "Taxis Autorizados (Aeropuerto El Dorado)",
@@ -46,27 +47,21 @@ const baseDatosTurismo = {
         }
     ]
 };
-// Este es el "cerebro" (script.js)
 
-// 1. Aquí guardamos la información de lo que mostraremos
-const baseDatosTurismo = {
-    negocios: [
-        { titulo: "Hoteles Empresariales", descripcion: "Cerca a Corferias..." },
-        { titulo: "Almuerzos de Negocios", descripcion: "Restaurantes recomendados..." }
-    ],
-    transporte: [
-        { titulo: "Taxis Autorizados", descripcion: "Toma el taxi en las filas oficiales..." }
-    ]
-    // ... los demás perfiles
-};
-
-// 2. Esta es la función que borra la pantalla y escribe la información nueva
+// ==========================================
+// 2. FUNCIÓN LÓGICA DE FILTRADO (BÁSICA)
+// ==========================================
 function filtrarPerfil(perfilSeleccionado) {
+    // Busca el contenedor en el HTML
     const contenedor = document.getElementById("contenedor-recomendaciones");
-    contenedor.innerHTML = ""; // Borra lo que había antes
     
+    // Borra las recomendaciones anteriores de la pantalla
+    contenedor.innerHTML = ""; 
+    
+    // Obtiene los datos del perfil que el usuario tocó
     const datosFiltrados = baseDatosTurismo[perfilSeleccionado];
     
+    // Si existen datos para ese perfil, los dibuja uno a uno en la pantalla
     if (datosFiltrados) {
         datosFiltrados.forEach(function(item) {
             contenedor.innerHTML += `
