@@ -46,3 +46,35 @@ const baseDatosTurismo = {
         }
     ]
 };
+// Este es el "cerebro" (script.js)
+
+// 1. Aquí guardamos la información de lo que mostraremos
+const baseDatosTurismo = {
+    negocios: [
+        { titulo: "Hoteles Empresariales", descripcion: "Cerca a Corferias..." },
+        { titulo: "Almuerzos de Negocios", descripcion: "Restaurantes recomendados..." }
+    ],
+    transporte: [
+        { titulo: "Taxis Autorizados", descripcion: "Toma el taxi en las filas oficiales..." }
+    ]
+    // ... los demás perfiles
+};
+
+// 2. Esta es la función que borra la pantalla y escribe la información nueva
+function filtrarPerfil(perfilSeleccionado) {
+    const contenedor = document.getElementById("contenedor-recomendaciones");
+    contenedor.innerHTML = ""; // Borra lo que había antes
+    
+    const datosFiltrados = baseDatosTurismo[perfilSeleccionado];
+    
+    if (datosFiltrados) {
+        datosFiltrados.forEach(function(item) {
+            contenedor.innerHTML += `
+                <div class="tarjeta-recomendacion">
+                    <h3>${item.titulo}</h3>
+                    <p>${item.descripcion}</p>
+                </div>
+            `;
+        });
+    }
+}
