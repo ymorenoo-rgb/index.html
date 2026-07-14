@@ -227,3 +227,34 @@ footer {
 .hidden {
     display: none !important;
 }
+/* Estilo básico para las tarjetas que pinta el JavaScript */
+.tarjeta-recomendacion {
+    background-color: #f9f9f9;
+    border-left: 5px solid #0056b3; /* Un azul corporativo básico */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.tarjeta-recomendacion h3 {
+    margin-top: 0;
+    color: #333333;
+    font-size: 1.1rem;
+}
+
+.tarjeta-recomendacion p {
+    color: #666666;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Color destacado y sutil para diferenciar el botón de transporte de los otros */
+.btn-transporte {
+    background-color: #e67e22; /* Color naranja/tierra que destaca pero se ve limpio */
+    color: white;
+}
+
+.btn-transporte:hover {
+    background-color: #d35400;
+}
