@@ -1,20 +1,24 @@
-<!-- ANTES: ¡Bienvenido a la Capital! Toca tu perfil de viajero para activar las recomendaciones inteligentes de IA -->
-<!-- AHORA (Sin la palabra "IA" para no saturar al usuario): -->
 <div class="header-bienvenida">
     <h1>¡Bienvenido a la Capital!</h1>
     <p>Toca tu perfil de viajero para activar nuestras recomendaciones recomendadas para ti</p>
 </div>
 
-<!-- BOTONERA PRINCIPAL (Añadimos la cuarta opción de Transporte) -->
 <div class="perfiles-contenedor">
-    <button onclick="filtrarPerfil('negocios')" class="btn-perfil">Negocios y Conexiones</button>
-    <button onclick="filtrarPerfil('familia')" class="btn-perfil">Vacaciones en Familia</button>
-    <button onclick="filtrarPerfil('cultura')" class="btn-perfil">Cultura y Alrededores</button>
-    <!-- NUEVO BOTÓN: Súper básico y directo -->
-    <button onclick="filtrarPerfil('transporte')" class="btn-perfil btn-transporte">Transporte Autorizado</button>
+    <button onclick="filtrarPerfil('negocios')" class="btn-perfil">
+        <!-- Puedes dejar el texto plano o meterle los iconos/descripciones pequeñas que ya tenías -->
+        Negocios y Conexiones
+    </button>
+    <button onclick="filtrarPerfil('familia')" class="btn-perfil">
+        Vacaciones en Familia
+    </button>
+    <button onclick="filtrarPerfil('cultura')" class="btn-perfil">
+        Cultura y Alrededores
+    </button>
+    <!-- Este es tu botón nuevo, básico y limpio -->
+    <button onclick="filtrarPerfil('transporte')" class="btn-perfil btn-transporte">
+        Transporte Autorizado
+    </button>
 </div>
 
-<!-- CONTENEDOR DONDE SE MUESTRAN LAS RECOMENDACIONES -->
-<div id="contenedor-recomendaciones">
-    <!-- Aquí JavaScript inyectará el contenido de forma dinámica -->
-</div>
+<!-- Asegúrate de tener este contenedor vacío justo abajo de los botones -->
+<div id="contenedor-recomendaciones"></div>
