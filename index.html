@@ -4,54 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punto Móvil de Publicidad (POP) - El Dorado</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #eef2f5; margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<body>
 
-    <div class="main-container" style="max-width: 600px; margin: 40px auto; background-color: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden;">
+    <div class="main-container">
         
-        <div class="header-bienvenida" style="background-color: #0d2c54; padding: 35px 20px; text-align: center; color: white;">
-            <span style="font-size: 0.9rem; letter-spacing: 2px; opacity: 0.8; font-weight: bold; text-transform: uppercase;">✈️ El Dorado • Bogotá</span>
-            <h1 style="margin-top: 10px; margin-bottom: 5px; font-size: 1.8rem; font-weight: 700;">¡Bienvenido a la Capital!</h1>
-            <p style="font-size: 0.95rem; opacity: 0.9; margin-top: 10px; margin-bottom: 0; line-height: 1.4;">Toca tu perfil de viajero para activar nuestras recomendaciones recomendadas para ti</p>
+        <div class="header-bienvenida">
+            <span>✈️ El Dorado • Bogotá</span>
+            <h1>¡Bienvenido a la Capital!</h1>
+            <p>Toca tu perfil de viajero para activar nuestras recomendaciones recomendadas para ti</p>
         </div>
 
-        <div class="perfiles-contenedor" style="padding: 25px 20px; display: flex; flex-direction: column; gap: 15px; background-color: #f8fafc;">
+        <div class="perfiles-contenedor">
             
-            <button onclick="filtrarPerfil('negocios')" class="btn-perfil" style="display: flex; align-items: center; justify-content: flex-start; text-align: left; padding: 15px 20px; border: none; border-radius: 12px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; width: 100%; transition: transform 0.2s;">
-                <span style="font-size: 2rem; margin-right: 15px;">💼</span>
+            <button onclick="filtrarPerfil('negocios')" class="btn-perfil">
+                <span class="btn-icon">💼</span>
                 <div>
-                    <strong style="display: block; font-size: 1.05rem; color: #0d2c54; margin-bottom: 2px;">Negocios y Conexiones</strong>
-                    <span style="font-size: 0.8rem; color: #64748b; font-weight: normal;">Zonas de Coworking, almuerzos ejecutivos y hoteles</span>
+                    <strong class="btn-titulo">Negocios y Conexiones</strong>
+                    <span class="btn-subtitulo">Zonas de Coworking, almuerzos ejecutivos y hoteles</span>
                 </div>
             </button>
 
-            <button onclick="filtrarPerfil('familia')" class="btn-perfil" style="display: flex; align-items: center; justify-content: flex-start; text-align: left; padding: 15px 20px; border: none; border-radius: 12px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; width: 100%; transition: transform 0.2s;">
-                <span style="font-size: 2rem; margin-right: 15px;">👨‍👩‍👧‍👦</span>
+            <button onclick="filtrarPerfil('familia')" class="btn-perfil">
+                <span class="btn-icon">👨‍👩‍👧‍👦</span>
                 <div>
-                    <strong style="display: block; font-size: 1.05rem; color: #0d2c54; margin-bottom: 2px;">Vacaciones en Familia</strong>
-                    <span style="font-size: 0.8rem; color: #64748b; font-weight: normal;">Parques de diversión, museos y planes familiares</span>
+                    <strong class="btn-titulo">Vacaciones en Familia</strong>
+                    <span class="btn-subtitulo">Parques de diversión, museos y planes familiares</span>
                 </div>
             </button>
 
-            <button onclick="filtrarPerfil('cultura')" class="btn-perfil" style="display: flex; align-items: center; justify-content: flex-start; text-align: left; padding: 15px 20px; border: none; border-radius: 12px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; width: 100%; transition: transform 0.2s;">
-                <span style="font-size: 2rem; margin-right: 15px;">🥾</span>
+            <button onclick="filtrarPerfil('cultura')" class="btn-perfil">
+                <span class="btn-icon">🥾</span>
                 <div>
-                    <strong style="display: block; font-size: 1.05rem; color: #0d2c54; margin-bottom: 2px;">Cultura y Alrededores</strong>
-                    <span style="font-size: 0.8rem; color: #64748b; font-weight: normal;">Museos históricos, Monserrate y pueblos coloniales</span>
+                    <strong class="btn-titulo">Cultura y Alrededores</strong>
+                    <span class="btn-subtitulo">Museos históricos, Monserrate y pueblos coloniales</span>
                 </div>
             </button>
 
-            <button onclick="filtrarPerfil('transporte')" class="btn-perfil" style="display: flex; align-items: center; justify-content: flex-start; text-align: left; padding: 15px 20px; border: none; border-radius: 12px; background: #e67e22; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; width: 100%; transition: transform 0.2s;">
-                <span style="font-size: 2rem; margin-right: 15px;">🚕</span>
+            <button onclick="filtrarPerfil('transporte')" class="btn-perfil btn-transporte">
+                <span class="btn-icon">🚕</span>
                 <div>
-                    <strong style="display: block; font-size: 1.05rem; color: white; margin-bottom: 2px;">Transporte Autorizado</strong>
-                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9); font-weight: normal;">Taxis oficiales, buses y movilidad segura</span>
+                    <strong class="btn-titulo">Transporte Autorizado</strong>
+                    <span class="btn-subtitulo">Taxis oficiales, buses y movilidad segura</span>
                 </div>
             </button>
 
         </div>
 
-        <div id="contenedor-recomendaciones" style="padding: 20px 25px; background-color: #ffffff; min-height: 50px;">
+        <div id="contenedor-recomendaciones" class="contenedor-recomendaciones">
             </div>
 
     </div>
